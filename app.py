@@ -3,6 +3,8 @@ from gpt_index import SimpleDirectoryReader, GPTListIndex, readers, GPTSimpleVec
 from langchain import OpenAI
 from IPython.display import Markdown, display
 
+os.environ["OPENAI_API_KEY"] = "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"
+
 app = Flask(__name__)
 
 # Konstruiere den Index
