@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JQuery-Code, um die Eingabeaufforderung an den Server zu senden und die Antwort zu aktualisieren
+        $(document).ready(function() {
+            $("#chat-form").submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/ask",
+                    type: "POST",
+                    data: {query: $("#message").val()},
+                    success: function(data) {
+                        $("#chat-log").append("<div class='message'><div class='message-text'>" + $("#message").val() + "</div></div>");
+                        $("#message").val("");
+                        $("#chat-log").append("<div class='message'><div class='message-text'>" + data.response + "</div></div>");
+                        $("#chat-log").scrollTop($("#chat-log")[0].scrollHeight);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+	<div class="chat-container">
+		<div class="chat-bubble outgoing">
+			<p>Hello, how can I help you today?</p>
+			<span class="time">10:30 AM</span>
+		</div>
+		<div class="chat-bubble incoming">
+			<p>Hi, I have a question about my recent purchase.</p>
+			<span class="time">10:31 AM</span>
+		</div>
+		<div class="chat-bubble outgoing">
+			<p>Sure, what's your question?</p>
+			<span class="time">10:32 AM</span>
+		</div>
+		<div class="chat-bubble incoming">
+			<p>I received the wrong item. What can I do?</p>
+			<span class="time">10:33 AM</span>
+		</div>
+		<div class="chat-bubble outgoing">
+			<p>We apologize for the inconvenience. Please contact our customer support team and they will assist you with returning the incorrect item and receiving the correct one.</p>
+			<span class="time">10:34 AM</span>
+		</div>
+		<div class="chat-bubble incoming">
+			<p>Thank you, I will do that.</p>
+			<span class="time">10:35 AM</span>
+		</div>
+	</div>
+</body>
+<body>
+    <div id="chat-log">
+        <div class="chat-container">
+  <div class="chat-header">Chatverlauf</div>
+  <div class="chat-history">
+    <div class="chat-message incoming">
+      <div class="chat-message-bubble incoming">
+        Hallo! Wie geht es dir?
+      </div>
+    </div>
+    <div class="chat-message outgoing">
+      <div class="chat-message-bubble outgoing">
+        Mir geht es gut, danke! Und dir?
+      </div>
+    </div>
+    <div class="chat-message incoming">
+      <div class="chat-message-bubble incoming">
+        Mir geht es auch gut. Was hast du heute vor?
+      </div>
+    </div></div>
+    <form id="chat-form" class="chat-input">
+        <input type="text" class="chat-input-field" id="message" placeholder="Nachricht eingeben...">
+        <button type="submit" id="send-button" class="chat-send-button"><svg id="send-icon" viewBox="0 0 24 24"><path d="M2.011 21.973l20.97-9.98-20.97-9.974v19.954zm1.838-1.786v-8.202l12.896 6.145-12.896 2.057zm18.121-9.324l-16.283 7.756 1.038-6.936 15.245-1.82z"/></svg></button>
+    </form>
+</body>
+</html>
